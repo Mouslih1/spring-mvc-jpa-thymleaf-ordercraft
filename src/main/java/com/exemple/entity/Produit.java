@@ -6,18 +6,18 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
-public class User {
+@Entity
+@Table(name = "produits")
+public class Produit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String email;
-    private String password;
-
+    private String description;
+    private double prix_unitaire;
+    private int quantity_in_stock;
 }
