@@ -1,6 +1,6 @@
 # spring-mvc-jpa-thymleaf-ordercraft
 Configuration Spring MVC :
-Configuration du fichier web.xml (si utilisé) :
+Configuration du fichier web.xml et les class java @Configuration et @Bean:
 
 Définir le DispatcherServlet comme servlet principal pour gérer les requêtes.
 Configurer spring data jpa et spring mvc  les class java et beans (ou annotations) :
