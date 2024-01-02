@@ -6,10 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServlet;
@@ -18,17 +16,22 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @AllArgsConstructor
+@SessionAttributes({"error"})
 public class AuthController {
 
     private InterfaceUserService interfaceUserService;
 
-    @Autowired
-    private HttpServletRequest httpServletRequest;
-
     @RequestMapping("/")
-    public String login()
+    public String login(SessionStatus status)
     {
+        status.setComplete();
         return "auth/login";
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboard()
+    {
+        return "/dashboard";
     }
 
     @PostMapping("/login")
@@ -38,10 +41,10 @@ public class AuthController {
         {
             User user = interfaceUserService.authenticate(email, password);
             session.setAttribute("name", user.getName());
-            return "/dashboard";
+            return "redirect:/dashboard";
         }else{
             model.addAttribute("error", "Fail login with this email & password try again !");
-            return "auth/login";
+            return "redirect:/";
         }
     }
 

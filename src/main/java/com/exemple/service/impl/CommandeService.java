@@ -27,7 +27,14 @@ public class CommandeService implements InterfaceCommandeService {
     }
 
     @Override
-    public List<Commande> getCommandes() {
+    public List<Commande> getCommandes()
+    {
         return interfaceCommandeRepository.findAll();
+    }
+
+    @Override
+    public Commande updateCommande(Commande commande)
+    {
+        return interfaceCommandeRepository.save(commande);
     }
 }

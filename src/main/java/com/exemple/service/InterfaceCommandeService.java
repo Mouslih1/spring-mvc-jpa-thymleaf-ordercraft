@@ -8,4 +8,5 @@ public interface InterfaceCommandeService {
     Commande addCommande(Commande commande);
     Commande getById(Long id);
     List<Commande> getCommandes();
+    Commande updateCommande(Commande commande);
 }
