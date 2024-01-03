@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Create user</title>
+    <title>Situation commandes</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <div class="min-h-full">
@@ -14,11 +14,16 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <!-- Replace with your content -->
                 <!-- This example requires Tailwind CSS v2.0+ -->
+                <div class="mb-8">
+                    <div th:if="${success}" class="bg-green-200 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+                        <p th:text="${success}"></p>
+                    </div>
+                </div>
                 <div class="px-4 sm:px-6 lg:px-8">
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex-auto">
                             <h1 class="text-xl font-semibold text-gray-900">Commandes</h1>
-                            <p class="mt-2 text-sm text-gray-700">A list of all the commandes in your account including their information add quantity of commande or edit état with her situation.</p>
+                            <p class="mt-2 text-sm text-gray-700">A list of all the commandes in your account including their information edit état with her situation.</p>
                         </div>
                     </div>
                     <div class="mt-8 flex flex-col">
@@ -42,67 +47,56 @@
                                         </tr>
                                         </thead>
                                         <tbody class="divide-y divide-gray-200 bg-white">
-                                        <div th:each="commande:${commandes}">
-                                            <div th:each="commandeProduit:${commandeProduits}">
-                                                <div th:each="produit:${produits}">
-                                                    <div th:if="${commande.id == commandeProduit.commande.id && commandeProduit.produit.id == produit.id}">
-
-                                                        <tr>
-                                                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
-                                                                <div class="flex items-center">
-                                                                    <div class="ml-4">
-                                                                        <div th:text="${commande.id}" class="font-medium text-gray-900"></div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-
-                                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                                <div th:text="${produit.name}" class="text-gray-900"></div>
-                                                            </td>
-
-                                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                                <div th:text="${commande.address_livraison}" class="text-gray-900"></div>
-                                                            </td>
-
-                                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                                <div th:text="${commandeProduit.quantite_commander}" class="text-gray-900"></div>
-                                                            </td>
-
-                                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                                <div th:text="${produit.prix_unitaire}" class="text-gray-900"></div>
-                                                            </td>
-
-                                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                                <div th:if="${commande.etat_commande == 'TERMINER'}">
-                                                                    <span th:text="${commande.etat_commande}" class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800"></span>
-                                                                </div>
-                                                                <div th:if="${commande.etat_commande == 'ANNULER'}">
-                                                                    <span th:text="${commande.etat_commande}" class="inline-flex rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-800"><%=commande.getEtat_commande()%></span>
-                                                                </div>
-                                                                <div th:if="${commande.etat_commande == 'EN_COURS'}">
-                                                                    <span th:text="${commande.etat_commande}" class="inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800"><%=commande.getEtat_commande()%></span>
-                                                                </div>
-                                                            </td>
-                                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                                <div th:text="${commandeProduit.prix_total}" class="text-gray-900"></div>
-                                                            </td>
-
-                                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                                                <div th:text="${commande.date_creation}" class="text-gray-900"><%=commande.getDate()%></div>
-                                                            </td>
-
-                                                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                                                <a th:action="@{/situation_commande/edit_status/{id}(id=${commande.id})}" class="text-indigo-600 hover:text-indigo-900">Edit status<span class="sr-only">, Lindsay Walton</span></a>
-                                                            </td>
-                                                        </tr>
-
-
-
+                                        <div th:each="commandeProduit:${commandeProduits}">
+                                            <tr>
+                                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                                                    <div class="flex items-center">
+                                                        <div class="ml-4">
+                                                            <div th:text="${commandeProduit.commande.id}" class="font-medium text-gray-900"></div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                </td>
 
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                    <div th:text="${commandeProduit.produit.name}" class="text-gray-900"></div>
+                                                </td>
+
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                    <div th:text="${commandeProduit.commande.address_livraison}" class="text-gray-900"></div>
+                                                </td>
+
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                    <div th:text="${commandeProduit.quantite_commander}" class="text-gray-900"></div>
+                                                </td>
+
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                    <div th:text="${commandeProduit.produit.prix_unitaire}" class="text-gray-900"></div>
+                                                </td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+
+                                                    <div th:if='${commandeProduit.commande.etat_commande == etat[1]}'>
+                                                        <span class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800" th:text="${commandeProduit.commande.etat_commande}"></span>
+                                                    </div>
+                                                    <div th:if='${commandeProduit.commande.etat_commande == etat[2]}'>
+                                                        <span class="inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-red-800" th:text="${commandeProduit.commande.etat_commande}"></span>
+                                                    </div>
+                                                    <div th:if='${commandeProduit.commande.etat_commande == etat[0]}'>
+                                                        <span class="inline-flex rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-800" th:text="${commandeProduit.commande.etat_commande}"></span>
+                                                    </div>
+                                                </td>
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                    <div th:text="${commandeProduit.prix_total}" class="text-gray-900"></div>
+                                                </td>
+
+                                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                    <div th:text="${commandeProduit.commande.date_creation}" class="text-gray-900"><%=commande.getDate()%></div>
+                                                </td>
+
+                                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                                    <a th:href="@{/situation_commandes/edit_status/{id}(id=${commandeProduit.commande.id})}" class="text-indigo-600 hover:text-indigo-900">Edit status<span class="sr-only">, Lindsay Walton</span></a>
+                                                </td>
+                                            </tr>
+                                        </div>
                                         </tbody>
                                     </table>
                                 </div>
@@ -114,6 +108,5 @@
             </div>
         </main>
     </div>
-
 </div>
 </html>
