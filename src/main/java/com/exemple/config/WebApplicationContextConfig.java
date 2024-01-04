@@ -64,14 +64,4 @@ public class WebApplicationContextConfig implements WebMvcConfigurer {
         viewResolver.setTemplateEngine(templateEngine());
         return viewResolver;
     }
-
-      /*@Bean
-    public InternalResourceViewResolver getInternalResourceViewResolver()
-    {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/jsp/");
-        viewResolver.setSuffix(".jsp");
-
-        return viewResolver;
-    }*/
 }
