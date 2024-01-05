@@ -1,4 +1,5 @@
 # spring-mvc-jpa-thymleaf-ordercraft
+## Project pushed in master branch
 Configuration Spring MVC :
 Configuration du fichier web.xml et les class java @Configuration et @Bean:
 
